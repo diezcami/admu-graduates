@@ -34,6 +34,32 @@
            type="button" 
            value="Vocational" 
            onclick="setVocational();" />
+
+    <BR />
+    <input name="2010" 
+           type="button" 
+           value="2010" 
+           onclick="setYear(2010);" />
+
+    <input name="2011" 
+           type="button" 
+           value="2011" 
+           onclick="setYear(2011);" />
+
+    <input name="2012" 
+           type="button" 
+           value="2012" 
+           onclick="setYear(2012);" />    
+
+    <input name="2013" 
+           type="button" 
+           value="2013" 
+           onclick="setYear(2013);" />
+
+    <input name="2014" 
+           type="button" 
+           value="2014" 
+           onclick="setYear(2014);" />    
 </div>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
@@ -46,6 +72,7 @@ var drawUnemployed = false;
 var drawFurtherStudies = false;
 var drawVacation = false;
 var drawVocational = false;
+var year = 2014;
 
 /* ============================================================
     D3 GRAPH SETUP
@@ -169,55 +196,59 @@ function setVocational() {
   draw();
 }
 
+function setYear (value) {
+  year = value;
+}
+
 
 /* ============================================================
     DRAWING FUNCTIONS
  ============================================================ */
 function drawRespondents() {
-  var drawEmployed = false;
-  var drawUnemployed = false;
-  var drawFurtherStudies = false;
-  var drawVacation = false;
-  var drawVocational = false;
+  drawEmployed = false;
+  drawUnemployed = false;
+  drawFurtherStudies = false;
+  drawVacation = false;
+  drawVocational = false;
 
   var svg = d3.select("svg");
   svg.selectAll("*").remove();
 
   d3.csv("src/2014.csv", type, function(error, data) {
-  x.domain(data.map(function(d) { return d.course; }));
-  y.domain([0, d3.max(data, function(d) { return d.respondents; })]);
+    x.domain(data.map(function(d) { return d.course; }));
+    y.domain([0, d3.max(data, function(d) { return d.respondents; })]);
 
-  svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis)
-      .selectAll("text")  
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+        .selectAll("text")  
+          .style("text-anchor", "end")
+          .attr("dx", "-.8em")
+          .attr("dy", ".15em")
+          .attr("transform", "rotate(-65)" );
+
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+      .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
         .style("text-anchor", "end")
-        .attr("dx", "-.8em")
-        .attr("dy", ".15em")
-        .attr("transform", "rotate(-65)" );
+        .text("Number of Respondents");
 
-  svg.append("g")
-      .attr("class", "y axis")
-      .call(yAxis)
-    .append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 6)
-      .attr("dy", ".71em")
-      .style("text-anchor", "end")
-      .text("Number of Respondents");
-
-    svg.selectAll(".respondentsBar")
-        .data(data)
-      .enter().append("rect")
-        .attr("class", "respondentsBar")
-        .attr("x", function(d) { return x(d.course); })
-        .attr("width", x.rangeBand())
-        .attr("y", function(d) { return y(d.respondents); })
-        .attr("height", function(d) { return height - y(d.respondents); })
-        .on('mouseover', tip.show)
-        .on('mouseout', tip.hide);
-  });
+      svg.selectAll(".respondentsBar")
+          .data(data)
+        .enter().append("rect")
+          .attr("class", "respondentsBar")
+          .attr("x", function(d) { return x(d.course); })
+          .attr("width", x.rangeBand())
+          .attr("y", function(d) { return y(d.respondents); })
+          .attr("height", function(d) { return height - y(d.respondents); })
+          .on('mouseover', tip.show)
+          .on('mouseout', tip.hide);
+    });
 }
 
 function draw() {
@@ -225,93 +256,93 @@ function draw() {
   svg.selectAll("*").remove();
 
   d3.csv("src/2014.csv", type, function(error, data) {
-  x.domain(data.map(function(d) { return d.course; }));
-  y.domain([0, 1]);
+    x.domain(data.map(function(d) { return d.course; }));
+    y.domain([0, 1]);
 
-  svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis)
-      .selectAll("text")  
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+        .selectAll("text")  
+          .style("text-anchor", "end")
+          .attr("dx", "-.8em")
+          .attr("dy", ".15em")
+          .attr("transform", "rotate(-65)" );
+
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+      .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
         .style("text-anchor", "end")
-        .attr("dx", "-.8em")
-        .attr("dy", ".15em")
-        .attr("transform", "rotate(-65)" );
+        .text("Percentage of Respondents");
 
-  svg.append("g")
-      .attr("class", "y axis")
-      .call(yAxis)
-    .append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 6)
-      .attr("dy", ".71em")
-      .style("text-anchor", "end")
-      .text("Percentage of Respondents");
+    if (drawEmployed) {
+      svg.selectAll(".employedBar")
+          .data(data)
+        .enter().append("rect")
+          .attr("class", "employedBar")
+          .attr("x", function(d) { return x(d.course); })
+          .attr("width", x.rangeBand())
+          .attr("y", function(d) { return y(d.employed); })
+          .attr("height", function(d) { return height - y(d.employed); })
+          .on('mouseover', tip.show)
+          .on('mouseout', tip.hide)
+    }
 
-  if (drawEmployed) {
-    svg.selectAll(".employedBar")
-        .data(data)
-      .enter().append("rect")
-        .attr("class", "employedBar")
-        .attr("x", function(d) { return x(d.course); })
-        .attr("width", x.rangeBand())
-        .attr("y", function(d) { return y(d.employed); })
-        .attr("height", function(d) { return height - y(d.employed); })
-        .on('mouseover', tip.show)
-        .on('mouseout', tip.hide)
-  }
+    if (drawFurtherStudies) {
+      svg.selectAll(".furtherStudiesBar")
+          .data(data)
+        .enter().append("rect")
+          .attr("class", "furtherStudiesBar")
+          .attr("x", function(d) { return x(d.course); })
+          .attr("width", x.rangeBand())
+          .attr("y", function(d) { return y(d.furtherstudies); })
+          .attr("height", function(d) { return height - y(d.furtherstudies); })
+          .on('mouseover', tip.show)
+          .on('mouseout', tip.hide)
+    }
 
-  if (drawFurtherStudies) {
-    svg.selectAll(".furtherStudiesBar")
-        .data(data)
-      .enter().append("rect")
-        .attr("class", "furtherStudiesBar")
-        .attr("x", function(d) { return x(d.course); })
-        .attr("width", x.rangeBand())
-        .attr("y", function(d) { return y(d.furtherstudies); })
-        .attr("height", function(d) { return height - y(d.furtherstudies); })
-        .on('mouseover', tip.show)
-        .on('mouseout', tip.hide)
-  }
+    if (drawUnemployed) {
+      svg.selectAll(".unemployedBar")
+          .data(data)
+        .enter().append("rect")
+          .attr("class", "unemployedBar")
+          .attr("x", function(d) { return x(d.course); })
+          .attr("width", x.rangeBand())
+          .attr("y", function(d) { return y(d.unemployed); })
+          .attr("height", function(d) { return height - y(d.unemployed); })
+          .on('mouseover', tip.show)
+          .on('mouseout', tip.hide)
+    }
 
-  if (drawUnemployed) {
-    svg.selectAll(".unemployedBar")
-        .data(data)
-      .enter().append("rect")
-        .attr("class", "unemployedBar")
-        .attr("x", function(d) { return x(d.course); })
-        .attr("width", x.rangeBand())
-        .attr("y", function(d) { return y(d.unemployed); })
-        .attr("height", function(d) { return height - y(d.unemployed); })
-        .on('mouseover', tip.show)
-        .on('mouseout', tip.hide)
-  }
+    if (drawVacation) {
+      svg.selectAll(".vacationBar")
+          .data(data)
+        .enter().append("rect")
+          .attr("class", "vacationBar")
+          .attr("x", function(d) { return x(d.course); })
+          .attr("width", x.rangeBand())
+          .attr("y", function(d) { return y(d.vacation); })
+          .attr("height", function(d) { return height - y(d.vacation); })
+          .on('mouseover', tip.show)
+          .on('mouseout', tip.hide)
+    }
 
-  if (drawVacation) {
-    svg.selectAll(".vacationBar")
-        .data(data)
-      .enter().append("rect")
-        .attr("class", "vacationBar")
-        .attr("x", function(d) { return x(d.course); })
-        .attr("width", x.rangeBand())
-        .attr("y", function(d) { return y(d.vacation); })
-        .attr("height", function(d) { return height - y(d.vacation); })
-        .on('mouseover', tip.show)
-        .on('mouseout', tip.hide)
-  }
-
-  if (drawVocational) {
-    svg.selectAll(".vocationalBar")
-        .data(data)
-      .enter().append("rect")
-        .attr("class", "vocationalBar")
-        .attr("x", function(d) { return x(d.course); })
-        .attr("width", x.rangeBand())
-        .attr("y", function(d) { return y(d.vocational); })
-        .attr("height", function(d) { return height - y(d.vocational); })
-        .on('mouseover', tip.show)
-        .on('mouseout', tip.hide)
-  }
+    if (drawVocational) {
+      svg.selectAll(".vocationalBar")
+          .data(data)
+        .enter().append("rect")
+          .attr("class", "vocationalBar")
+          .attr("x", function(d) { return x(d.course); })
+          .attr("width", x.rangeBand())
+          .attr("y", function(d) { return y(d.vocational); })
+          .attr("height", function(d) { return height - y(d.vocational); })
+          .on('mouseover', tip.show)
+          .on('mouseout', tip.hide)
+    }
   });
 
 }
