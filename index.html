@@ -100,12 +100,52 @@ var yAxis = d3.svg.axis()
     .orient("left")
     .tickFormat(formatPercent);
 
-var tip = d3.tip()
+/* ============================================================
+    TOOL TIPS
+ ============================================================ */ 
+
+var respondentsTip = d3.tip()
   .attr('class', 'd3-tip')
   .offset([-10, 0])
   .html(function(d) {
-    return "<strong>Employed:</strong> <span style='color:red'>" + d.employed*100 + "<strong>%</strong> </span>";
+    return "<strong>Respondents:</strong> <span style='color:red'>" + d.respondents;
   })
+
+var employedTip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    return "<strong>Employed:</strong> <span style='color:#ffc65d'>" + d.employed + "<strong>%</strong> </span>";
+  })
+
+var unemployedTip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    return "<strong>Unemployed:</strong> <span style='color:#f16745'>" + d.unemployed + "<strong>%</strong> </span>";
+  })
+
+var furtherStudiesTip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    return "<strong>Pursued Further Studies:</strong> <span style='color:#7bc8a4'>" + d.furtherstudies + "<strong>%</strong> </span>";
+  })
+
+var vacationTip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    return "<strong>Went on Vacation:</strong> <span style='color:#4cc3d9'>" + d.vacation + "<strong>%</strong> </span>";
+  })
+
+var vocationalTip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    return "<strong>Pursued Vocational Path:</strong> <span style='color:#93648D'>" + d.vocational + "<strong>%</strong> </span>";
+  })
+
 
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -113,8 +153,17 @@ var svg = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-svg.call(tip);
+svg.call(respondentsTip);
+svg.call(employedTip);
+svg.call(unemployedTip);
+svg.call(furtherStudiesTip);
+svg.call(vacationTip);
+svg.call(vocationalTip);
 
+
+/* ============================================================
+    CSV DECLARATION
+ ============================================================ */ 
 d3.csv(fileName, type, function(error, data) {
   x.domain(data.map(function(d) { return d.course; }));
   y.domain([0, d3.max(data, function(d) { return d.respondents; })]);
@@ -147,8 +196,8 @@ d3.csv(fileName, type, function(error, data) {
       .attr("width", x.rangeBand())
       .attr("y", function(d) { return y(d.respondents); })
       .attr("height", function(d) { return height - y(d.respondents); })
-      .on('mouseover', tip.show)
-      .on('mouseout', tip.hide);
+      .on('mouseover', respondentsTip.show)
+      .on('mouseout', respondentsTip.hide);
 });
 /* ============================================================
     BUTTON FUNCTIONS
@@ -222,8 +271,6 @@ function drawRespondents() {
   var svg = d3.select("svg");
   svg.selectAll("*").remove();
 
-
-
   d3.csv(fileName, type, function(error, data) {
     x.domain(data.map(function(d) { return d.course; }));
     y.domain([0, d3.max(data, function(d) { return d.respondents; })]);
@@ -256,8 +303,8 @@ function drawRespondents() {
           .attr("width", x.rangeBand())
           .attr("y", function(d) { return y(d.respondents); })
           .attr("height", function(d) { return height - y(d.respondents); })
-          .on('mouseover', tip.show)
-          .on('mouseout', tip.hide);
+          .on('mouseover', respondentsTip.show)
+          .on('mouseout', respondentsTip.hide);
     });
 }
 
@@ -299,8 +346,8 @@ function draw() {
           .attr("width", x.rangeBand())
           .attr("y", function(d) { return y(d.employed); })
           .attr("height", function(d) { return height - y(d.employed); })
-          .on('mouseover', tip.show)
-          .on('mouseout', tip.hide)
+          .on('mouseover', employedTip.show)
+          .on('mouseout', employedTip.hide)
     }
 
     if (drawFurtherStudies) {
@@ -312,8 +359,8 @@ function draw() {
           .attr("width", x.rangeBand())
           .attr("y", function(d) { return y(d.furtherstudies); })
           .attr("height", function(d) { return height - y(d.furtherstudies); })
-          .on('mouseover', tip.show)
-          .on('mouseout', tip.hide)
+          .on('mouseover', furtherStudiesTip.show)
+          .on('mouseout', furtherStudiesTip.hide)
     }
 
     if (drawUnemployed) {
@@ -325,8 +372,8 @@ function draw() {
           .attr("width", x.rangeBand())
           .attr("y", function(d) { return y(d.unemployed); })
           .attr("height", function(d) { return height - y(d.unemployed); })
-          .on('mouseover', tip.show)
-          .on('mouseout', tip.hide)
+          .on('mouseover', unemployedTip.show)
+          .on('mouseout', unemployedTip.hide)
     }
 
     if (drawVacation) {
@@ -338,8 +385,8 @@ function draw() {
           .attr("width", x.rangeBand())
           .attr("y", function(d) { return y(d.vacation); })
           .attr("height", function(d) { return height - y(d.vacation); })
-          .on('mouseover', tip.show)
-          .on('mouseout', tip.hide)
+          .on('mouseover', vacationTip.show)
+          .on('mouseout', vacationTip.hide)
     }
 
     if (drawVocational) {
@@ -351,8 +398,8 @@ function draw() {
           .attr("width", x.rangeBand())
           .attr("y", function(d) { return y(d.vocational); })
           .attr("height", function(d) { return height - y(d.vocational); })
-          .on('mouseover', tip.show)
-          .on('mouseout', tip.hide)
+          .on('mouseover', vocationalTip.show)
+          .on('mouseout', vocationalTip.hide)
     }
   });
 
