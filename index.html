@@ -35,44 +35,46 @@
            value="Vocational" 
            onclick="setVocational();" />
 
-    <BR />
+    <BR /> 
+    <!--
     <input name="2010" 
            type="button" 
            value="2010" 
-           onclick="setYear(2010);" />
+           onclick="setYear('2010');" />
 
     <input name="2011" 
            type="button" 
            value="2011" 
-           onclick="setYear(2011);" />
+           onclick="setYear('2011');" />
 
     <input name="2012" 
            type="button" 
            value="2012" 
-           onclick="setYear(2012);" />    
-
+           onclick="setYear('2012');" />    
+    -->
     <input name="2013" 
            type="button" 
            value="2013" 
-           onclick="setYear(2013);" />
+           onclick="setYear('2013');" />
 
     <input name="2014" 
            type="button" 
            value="2014" 
-           onclick="setYear(2014);" />    
+           onclick="setYear('2014');" />    
 </div>
-<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="src/d3.min.js"></script>
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 <script>
 /* ============================================================
     VARIABLE DECLARATIONS
  ============================================================ */ 
+var drawNumRespondents = true;
 var drawEmployed = false;
 var drawUnemployed = false;
 var drawFurtherStudies = false;
 var drawVacation = false;
 var drawVocational = false;
-var year = 2014;
+var fileName = "src/2014.csv";
 
 /* ============================================================
     D3 GRAPH SETUP
@@ -113,7 +115,7 @@ var svg = d3.select("body").append("svg")
 
 svg.call(tip);
 
-d3.csv("src/2014.csv", type, function(error, data) {
+d3.csv(fileName, type, function(error, data) {
   x.domain(data.map(function(d) { return d.course; }));
   y.domain([0, d3.max(data, function(d) { return d.respondents; })]);
 
@@ -196,8 +198,13 @@ function setVocational() {
   draw();
 }
 
-function setYear (value) {
-  year = value;
+function setYear (year) {
+  fileName = "src/" + year + ".csv";
+  if (drawRespondents) {
+    drawRespondents();
+  } else {
+    draw();
+  }
 }
 
 
@@ -205,6 +212,7 @@ function setYear (value) {
     DRAWING FUNCTIONS
  ============================================================ */
 function drawRespondents() {
+  drawNumRespondents = true;
   drawEmployed = false;
   drawUnemployed = false;
   drawFurtherStudies = false;
@@ -214,7 +222,9 @@ function drawRespondents() {
   var svg = d3.select("svg");
   svg.selectAll("*").remove();
 
-  d3.csv("src/2014.csv", type, function(error, data) {
+
+
+  d3.csv(fileName, type, function(error, data) {
     x.domain(data.map(function(d) { return d.course; }));
     y.domain([0, d3.max(data, function(d) { return d.respondents; })]);
 
@@ -252,10 +262,11 @@ function drawRespondents() {
 }
 
 function draw() {
+  drawNumRespondents = false;
   var svg = d3.select("svg");
   svg.selectAll("*").remove();
 
-  d3.csv("src/2014.csv", type, function(error, data) {
+  d3.csv(fileName, type, function(error, data) {
     x.domain(data.map(function(d) { return d.course; }));
     y.domain([0, 1]);
 

@@ -13,11 +13,11 @@ body {
     BARS
  */
 .respondentsBar {
-  fill: #f16745;
+  fill: orange;
 }
 
 .respondentsBar:hover {
-  fill: #e62a13 ;
+  fill: orangered ;
 }
 
 .employedBar {
@@ -29,36 +29,36 @@ body {
 }
 
 
-.unemployedBar {
+.furtherStudiesBar {
   fill: #7bc8a4;
 }
 
-.unemployedBar:hover {
+.furtherStudiesBar:hover {
   fill: #3b9e6b ;
 }
 
-.furtherStudiesBar {
+.vacationBar {
   fill: #4cc3d9;
 }
 
-.furtherStudiesBar:hover {
+.vacationBar:hover {
   fill: #1797ba ;
 }
 
-.vacationBar {
+.vocationalBar {
   fill: #93648D;
 }
 
-.vacationBar:hover {
+.vocationalBar:hover {
   fill: #56274f ;
 }
 
-.vocationalBar {
-  fill: #ff99cc;
+.unemployedBar {
+  fill: #f16745;
 }
 
-.vocationalBar:hover {
-  fill: #ff4da6 ;
+.unemployedBar:hover {
+  fill: #e62a13 ;
 }
 
 
