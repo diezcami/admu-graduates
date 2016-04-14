@@ -160,11 +160,11 @@ function setVacation() {
   draw();
 }
 
-function setVocation() {
-  if (drawVocation)
-    drawVocation = false;
+function setVocational() {
+  if (drawVocational)
+    drawVocational = false;
   else
-    drawVocation = true;
+    drawVocational = true;
 
   draw();
 }
@@ -261,19 +261,6 @@ function draw() {
         .on('mouseout', tip.hide)
   }
 
-  if (drawUnemployed) {
-    svg.selectAll(".unemployedBar")
-        .data(data)
-      .enter().append("rect")
-        .attr("class", "unemployedBar")
-        .attr("x", function(d) { return x(d.course); })
-        .attr("width", x.rangeBand())
-        .attr("y", function(d) { return y(d.unemployed); })
-        .attr("height", function(d) { return height - y(d.unemployed); })
-        .on('mouseover', tip.show)
-        .on('mouseout', tip.hide)
-  }
-
   if (drawFurtherStudies) {
     svg.selectAll(".furtherStudiesBar")
         .data(data)
@@ -283,6 +270,19 @@ function draw() {
         .attr("width", x.rangeBand())
         .attr("y", function(d) { return y(d.furtherstudies); })
         .attr("height", function(d) { return height - y(d.furtherstudies); })
+        .on('mouseover', tip.show)
+        .on('mouseout', tip.hide)
+  }
+
+  if (drawUnemployed) {
+    svg.selectAll(".unemployedBar")
+        .data(data)
+      .enter().append("rect")
+        .attr("class", "unemployedBar")
+        .attr("x", function(d) { return x(d.course); })
+        .attr("width", x.rangeBand())
+        .attr("y", function(d) { return y(d.unemployed); })
+        .attr("height", function(d) { return height - y(d.unemployed); })
         .on('mouseover', tip.show)
         .on('mouseout', tip.hide)
   }
