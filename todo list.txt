@@ -1,0 +1,11 @@
+- Make slider for the year
+- Fix Y axis
+- Painting Over
+- Transitions
+
+Missing data:
+Industry
+Time before Employment
+// Classification of organization
+Salary
+Talent or Career Field
