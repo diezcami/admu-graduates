@@ -289,6 +289,9 @@ function drawRespondents() {
   drawVacation = false;
   drawVocational = false;
 
+  var hi = d3.select("#yearnav");
+  hi.selectAll("*").remove();
+
   var svg = d3.select("svg");
   svg.selectAll("*").remove();
 
@@ -341,8 +344,12 @@ function drawRespondents() {
 
 function draw() {
   drawNumRespondents = false;
+  var hi = d3.select("#yearnav");
+  hi.selectAll("*").remove();
+
   var svg = d3.select("svg");
   svg.selectAll("*").remove();
+
 
   svg = d3.select("svg")
     .attr("width", width + margin.left + margin.right)
@@ -452,7 +459,7 @@ function draw() {
 
 }
 
-//d3.select('#yearnav').call(d3.slider().axis(true).min(2010).max(2014));
+d3.select('#yearnav').call(d3.slider().axis(true).min(2010).max(2014));
 
 function type(d) {
   d.respondents = +d.respondents;
