@@ -2,8 +2,6 @@
 <title>ADMU Graduates Data Visualization</title>
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" href="src/style.css">
-<link rel="stylesheet" type="text/css" href="src/d3-slider.css">
-
 
 <body>
 <div id ="newheader">
@@ -70,13 +68,9 @@ A representation of post-graduation data from ADMU alumni from 2010-2014.
            value="2014" 
            onclick="setYear('2014');" />    
 </div>
-
-<div id ="yearslider"></div>
-
 <script src="src/d3.min.js"></script>
+<!-- <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script> -->
 <script src="src/d3.tip.js"></script>
-<script src="src/d3.slider.js"></script>
-
 <script>
 /* ============================================================
     VARIABLE DECLARATIONS
@@ -92,9 +86,9 @@ var fileName = "src/2014.csv";
 /* ============================================================
     D3 GRAPH SETUP
  ============================================================ */
-var margin = {top: 40, right: 20, bottom: 250, left: 40},
+var margin = {top: 40, right: 20, bottom: 830, left: 40},
     width = 1050 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+    height = 1000 - margin.top - margin.bottom;
 
 var formatPercent = d3.format(".0%");
 
@@ -176,40 +170,34 @@ svg.call(vocationalTip);
 /* ============================================================
     CSV DECLARATION
  ============================================================ */ 
-d3.select('#slider7').call(d3.slider().axis(true).min(2000).max(2100).step(5));
-
 d3.csv(fileName, type, function(error, data) {
   x.domain(data.map(function(d) { return d.course; }));
   y.domain([0, d3.max(data, function(d) { return d.respondents; })]);
 
   svg.append("g")
       .attr("class", "x axis")
-      .attr("transform", "translate(6," + height + ")")
-      .style('fill', '#333')
+      .attr("transform", "translate(0," + height + ")")
       .call(xAxis)
       .selectAll("text")  
         .style("text-anchor", "end")
         .attr("dx", "-.8em")
         .attr("dy", ".15em")
-        .attr("transform", "rotate(-65)" );
+        .attr("transform", "rotate(270)" );
 
   svg.append("g")
       .attr("class", "y axis")
-      .style('fill', '#333')
       .call(yAxis)
+      .style('fill', '#FFF')
     .append("text")
       .attr("transform", "rotate(-90)")
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .style('fill', '#333')
       .text("Number of Respondents");
-
 
   svg.selectAll(".respondentsBar")
       .data(data)
     .enter().append("rect")
-      .attr("transform", "translate(6)")
       .attr("class", "respondentsBar")
       .attr("x", function(d) { return x(d.course); })
       .attr("width", x.rangeBand())
@@ -217,7 +205,10 @@ d3.csv(fileName, type, function(error, data) {
       .attr("height", function(d) { return height - y(d.respondents); })
       .on('mouseover', respondentsTip.show)
       .on('mouseout', respondentsTip.hide);
+
+  svg.attr("transform","rotate(90 200 200)");
 });
+
 /* ============================================================
     BUTTON FUNCTIONS
  ============================================================ */
@@ -290,20 +281,13 @@ function drawRespondents() {
   var svg = d3.select("svg");
   svg.selectAll("*").remove();
 
-  svg = d3.select("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
   d3.csv(fileName, type, function(error, data) {
     x.domain(data.map(function(d) { return d.course; }));
     y.domain([0, d3.max(data, function(d) { return d.respondents; })]);
 
     svg.append("g")
         .attr("class", "x axis")
-        .style('fill', '#333')
-        .attr("transform", "translate(6," + height + ")")
+        .attr("transform", "translate(0," + height + ")")
         .call(xAxis)
         .selectAll("text")  
           .style("text-anchor", "end")
@@ -313,7 +297,6 @@ function drawRespondents() {
 
     svg.append("g")
         .attr("class", "y axis")
-        .style('fill', '#333')
         .call(yAxis)
       .append("text")
         .attr("transform", "rotate(-90)")
@@ -325,7 +308,6 @@ function drawRespondents() {
       svg.selectAll(".respondentsBar")
           .data(data)
         .enter().append("rect")
-          .attr("transform", "translate(6)")
           .attr("class", "respondentsBar")
           .attr("x", function(d) { return x(d.course); })
           .attr("width", x.rangeBand())
@@ -334,6 +316,7 @@ function drawRespondents() {
           .on('mouseover', respondentsTip.show)
           .on('mouseout', respondentsTip.hide);
 
+      svg.attr("transform","rotate(90 200 200)");
     });
 }
 
@@ -342,23 +325,13 @@ function draw() {
   var svg = d3.select("svg");
   svg.selectAll("*").remove();
 
-  svg = d3.select("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
   d3.csv(fileName, type, function(error, data) {
     x.domain(data.map(function(d) { return d.course; }));
     y.domain([0, 1]);
 
     svg.append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-
-    svg.append("g")
         .attr("class", "x axis")
-        .style('fill', '#333')
-        .attr("transform", "translate(6," + height + ")")
+        .attr("transform", "translate(0," + height + ")")
         .call(xAxis)
         .selectAll("text")  
           .style("text-anchor", "end")
@@ -368,20 +341,18 @@ function draw() {
 
     svg.append("g")
         .attr("class", "y axis")
-        .style('fill', '#333')
         .call(yAxis)
       .append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", 6)
         .attr("dy", ".71em")
         .style("text-anchor", "end")
-        .text("Number of Respondents");
+        .text("Percentage of Respondents");
 
     if (drawEmployed) {
       svg.selectAll(".employedBar")
           .data(data)
         .enter().append("rect")
-          .attr("transform", "translate(6)")
           .attr("class", "employedBar")
           .attr("x", function(d) { return x(d.course); })
           .attr("width", x.rangeBand())
@@ -395,7 +366,6 @@ function draw() {
       svg.selectAll(".furtherStudiesBar")
           .data(data)
         .enter().append("rect")
-          .attr("transform", "translate(6)")
           .attr("class", "furtherStudiesBar")
           .attr("x", function(d) { return x(d.course); })
           .attr("width", x.rangeBand())
@@ -409,7 +379,6 @@ function draw() {
       svg.selectAll(".unemployedBar")
           .data(data)
         .enter().append("rect")
-          .attr("transform", "translate(6)")
           .attr("class", "unemployedBar")
           .attr("x", function(d) { return x(d.course); })
           .attr("width", x.rangeBand())
@@ -423,7 +392,6 @@ function draw() {
       svg.selectAll(".vacationBar")
           .data(data)
         .enter().append("rect")
-          .attr("transform", "translate(6)")
           .attr("class", "vacationBar")
           .attr("x", function(d) { return x(d.course); })
           .attr("width", x.rangeBand())
@@ -437,7 +405,6 @@ function draw() {
       svg.selectAll(".vocationalBar")
           .data(data)
         .enter().append("rect")
-          .attr("transform", "translate(6)")
           .attr("class", "vocationalBar")
           .attr("x", function(d) { return x(d.course); })
           .attr("width", x.rangeBand())
@@ -446,6 +413,8 @@ function draw() {
           .on('mouseover', vocationalTip.show)
           .on('mouseout', vocationalTip.hide)
     }
+
+    svg.attr("transform","rotate(90 200 200)");
   });
 
 }

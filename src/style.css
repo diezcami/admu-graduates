@@ -4,6 +4,8 @@
 body {
   font: 10px sans-serif;
   font-family: "Helvetica Neue";
+  background-color: #FFFAF0;
+  color: #333;
 }
 
 h1 {
