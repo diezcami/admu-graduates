@@ -11,68 +11,69 @@
 A representation of post-graduation data from ADMU alumni from 2010-2014.
 <BR /><BR />
 </div>
+<div class="wrapper">
+  <div id="nav">
+      <input name="numberOfRespondents" 
+             type="button" 
+             value="Number of Respondents" 
+             onclick="drawRespondents();" />
 
-<div id="nav">
-    <input name="numberOfRespondents" 
-           type="button" 
-           value="Number of Respondents" 
-           onclick="drawRespondents();" />
+      <input name="employed" 
+             type="button" 
+             value="Employed" 
+             onclick="setEmployed();" />
 
-    <input name="employed" 
-           type="button" 
-           value="Employed" 
-           onclick="setEmployed();" />
+      <input name="unemployed" 
+             type="button" 
+             value="Unemployed" 
+             onclick="setUnemployed();" />
 
-    <input name="unemployed" 
-           type="button" 
-           value="Unemployed" 
-           onclick="setUnemployed();" />
+      <input name="furtherStudies" 
+             type="button" 
+             value="Further Studies" 
+             onclick="setFurtherStudies();" />
 
-    <input name="furtherStudies" 
-           type="button" 
-           value="Further Studies" 
-           onclick="setFurtherStudies();" />
+      <input name="vacation" 
+             type="button" 
+             value="Vacation" 
+             onclick="setVacation();" />
 
-    <input name="vacation" 
-           type="button" 
-           value="Vacation" 
-           onclick="setVacation();" />
+      <input name="vocational" 
+             type="button" 
+             value="Vocational" 
+             onclick="setVocational();" />
 
-    <input name="vocational" 
-           type="button" 
-           value="Vocational" 
-           onclick="setVocational();" />
+      <BR /> 
+      
+      <input name="2010" 
+             type="button" 
+             value="2010" 
+             onclick="setYear('2010');" />
 
-    <BR /> 
-    
-    <input name="2010" 
-           type="button" 
-           value="2010" 
-           onclick="setYear('2010');" />
+      <input name="2011" 
+             type="button" 
+             value="2011" 
+             onclick="setYear('2011');" />
 
-    <input name="2011" 
-           type="button" 
-           value="2011" 
-           onclick="setYear('2011');" />
+      <input name="2012" 
+             type="button" 
+             value="2012" 
+             onclick="setYear('2012');" />    
 
-    <input name="2012" 
-           type="button" 
-           value="2012" 
-           onclick="setYear('2012');" />    
+      <input name="2013" 
+             type="button" 
+             value="2013" 
+             onclick="setYear('2013');" />
 
-    <input name="2013" 
-           type="button" 
-           value="2013" 
-           onclick="setYear('2013');" />
+      <input name="2014" 
+             type="button" 
+             value="2014" 
+             onclick="setYear('2014');" />    
+  </div>
 
-    <input name="2014" 
-           type="button" 
-           value="2014" 
-           onclick="setYear('2014');" />    
+  <div id ="yearnav"></div>
+
 </div>
-
-<div id ="yearslider"></div>
-
 <script src="src/d3.min.js"></script>
 <script src="src/d3.tip.js"></script>
 <script src="src/d3.slider.js"></script>
@@ -176,7 +177,6 @@ svg.call(vocationalTip);
 /* ============================================================
     CSV DECLARATION
  ============================================================ */ 
-d3.select('#slider7').call(d3.slider().axis(true).min(2000).max(2100).step(5));
 
 d3.csv(fileName, type, function(error, data) {
   x.domain(data.map(function(d) { return d.course; }));
@@ -218,6 +218,8 @@ d3.csv(fileName, type, function(error, data) {
       .on('mouseover', respondentsTip.show)
       .on('mouseout', respondentsTip.hide);
 });
+
+
 /* ============================================================
     BUTTON FUNCTIONS
  ============================================================ */
@@ -450,9 +452,10 @@ function draw() {
 
 }
 
+//d3.select('#yearnav').call(d3.slider().axis(true).min(2010).max(2014));
 
 function type(d) {
-  d.employed = +d.employed;
+  d.respondents = +d.respondents;
   return d;
 }
 

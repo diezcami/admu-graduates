@@ -16,6 +16,18 @@ h1 {
   margin-bottom: 0;
 }
 
+.wrapper div {
+  margin: 35px 35px;
+  width: 800px;
+}
+
+/* For centering
+.wrapper {
+  width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}*/
+
 .axis path,
 .axis line {
   fill: none;
