@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <title>ADMU Graduates Data Visualization</title>
 <meta charset="utf-8">
-<link rel="stylesheet" type="text/css" href="src/style.css">
 <link rel="stylesheet" type="text/css" href="src/d3-slider.css">
+<link rel="stylesheet" type="text/css" href="src/style.css">
 
 
 <body>
@@ -340,6 +340,8 @@ function drawRespondents() {
           .on('mouseout', respondentsTip.hide);
 
     });
+
+d3.select('#yearnav').call(d3.slider().axis(true).min(2010).max(2014));
 }
 
 function draw() {
@@ -457,9 +459,10 @@ function draw() {
     }
   });
 
-}
-
 d3.select('#yearnav').call(d3.slider().axis(true).min(2010).max(2014));
+}
+var axis = d3.svg.axis().ticks(5);
+d3.select('#yearnav').call(d3.slider().axis(axis).min(2010).max(2014).step(1));
 
 function type(d) {
   d.respondents = +d.respondents;
