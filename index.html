@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <title>ADMU Graduates Data Visualization</title>
 <meta charset="utf-8">
-<link rel="stylesheet" type="text/css" href="src/d3-slider.css">
+<link rel="stylesheet" type="text/css" href="d3-src/d3-slider.css">
 <link rel="stylesheet" type="text/css" href="src/style.css">
 
 
@@ -71,29 +71,14 @@ A representation of post-graduation data from ADMU alumni from 2010-2014.
              onclick="setYear('2014');" />    
   </div>
 
-  <div id ="yearnav"></div>
 
 </div>
-<script src="src/d3.min.js"></script>
-<script src="src/d3.tip.js"></script>
-<script src="src/d3.slider.js"></script>
+<script src="d3-src/d3.min.js"></script>
+<script src="d3-src/d3.tip.js"></script>
 
 <script>
-/* ============================================================
-    VARIABLE DECLARATIONS
- ============================================================ */ 
-var drawNumRespondents = true;
-var drawEmployed = false;
-var drawUnemployed = false;
-var drawFurtherStudies = false;
-var drawVacation = false;
-var drawVocational = false;
-var fileName = "src/2014.csv";
 
-/* ============================================================
-    D3 GRAPH SETUP
- ============================================================ */
-var margin = {top: 40, right: 20, bottom: 250, left: 40},
+var margin = {top: 40, right: 5, bottom: 250, left: 40},
     width = 1050 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
 
@@ -105,6 +90,9 @@ var x = d3.scale.ordinal()
 var y = d3.scale.linear()
     .range([height, 0]);
 
+var color = d3.scale.ordinal()
+    .range(["#ffc65d", "#7bc8a4", "#f16745", "#4cc3d9", "#93648D"]);
+
 var xAxis = d3.svg.axis()
     .scale(x)
     .orient("bottom");
@@ -112,53 +100,7 @@ var xAxis = d3.svg.axis()
 var yAxis = d3.svg.axis()
     .scale(y)
     .orient("left")
-
-/* ============================================================
-    TOOL TIPS
- ============================================================ */ 
-
-var respondentsTip = d3.tip()
-  .attr('class', 'd3-tip')
-  .offset([-10, 0])
-  .html(function(d) {
-    return "<strong>Respondents:</strong> <span style='color:orangered'>" + d.respondents;
-  })
-
-var employedTip = d3.tip()
-  .attr('class', 'd3-tip')
-  .offset([-10, 0])
-  .html(function(d) {
-    return "<strong>Employed:</strong> <span style='color:#ffc65d'>" + d.employed*100 + "<strong>%</strong> </span>";
-  })
-
-var unemployedTip = d3.tip()
-  .attr('class', 'd3-tip')
-  .offset([-10, 0])
-  .html(function(d) {
-    return "<strong>Unemployed:</strong> <span style='color:#f16745'>" + d.unemployed*100 + "<strong>%</strong> </span>";
-  })
-
-var furtherStudiesTip = d3.tip()
-  .attr('class', 'd3-tip')
-  .offset([-10, 0])
-  .html(function(d) {
-    return "<strong>Pursued Further Studies:</strong> <span style='color:#7bc8a4'>" + d.furtherstudies*100 + "<strong>%</strong> </span>";
-  })
-
-var vacationTip = d3.tip()
-  .attr('class', 'd3-tip')
-  .offset([-10, 0])
-  .html(function(d) {
-    return "<strong>Went on Vacation:</strong> <span style='color:#4cc3d9'>" + d.vacation*100 + "<strong>%</strong> </span>";
-  })
-
-var vocationalTip = d3.tip()
-  .attr('class', 'd3-tip')
-  .offset([-10, 0])
-  .html(function(d) {
-    return "<strong>Pursued Vocational Path:</strong> <span style='color:#93648D'>" + d.vocational*100 + "<strong>%</strong> </span>";
-  })
-
+    .tickFormat(d3.format(".2s"));
 
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -166,26 +108,24 @@ var svg = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-svg.call(respondentsTip);
-svg.call(employedTip);
-svg.call(unemployedTip);
-svg.call(furtherStudiesTip);
-svg.call(vacationTip);
-svg.call(vocationalTip);
+d3.csv("data/2014.csv", function(error, data) {
+  if (error) throw error;
+
+  color.domain(d3.keys(data[0]).filter(function(key) { return key !== "course" && key !== "respondents"; }));
+
+  data.forEach(function(d) {
+    var y0 = 0;
+    d.ages = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name]}; });
+    d.total = d.ages[d.ages.length - 1].y1;
+  });
 
 
-/* ============================================================
-    CSV DECLARATION
- ============================================================ */ 
-
-d3.csv(fileName, type, function(error, data) {
   x.domain(data.map(function(d) { return d.course; }));
-  y.domain([0, d3.max(data, function(d) { return d.respondents; })]);
+  y.domain([0, d3.max(data, function(d) { return d.total; })]);
 
   svg.append("g")
       .attr("class", "x axis")
-      .attr("transform", "translate(6," + height + ")")
-      .style('fill', '#333')
+      .attr("transform", "translate(0," + height + ")")
       .call(xAxis)
       .selectAll("text")  
         .style("text-anchor", "end")
@@ -195,278 +135,76 @@ d3.csv(fileName, type, function(error, data) {
 
   svg.append("g")
       .attr("class", "y axis")
-      .style('fill', '#333')
       .call(yAxis)
     .append("text")
       .attr("transform", "rotate(-90)")
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .style('fill', '#333')
-      .text("Number of Respondents");
+      .text("Population");
 
-
-  svg.selectAll(".respondentsBar")
+  var state = svg.selectAll(".state")
       .data(data)
+    .enter().append("g")
+      .attr("class", "g")
+      .attr("transform", function(d) { return "translate(" + x(d.course) + ",0)"; });
+
+  state.selectAll("rect")
+      .data(function(d) { return d.ages; })
+    .on("mouseover", function() { tooltip.style("display", null); })
+    .on("mouseout", function() { tooltip.style("display", "none"); })
+    .on("mousemove", function(d) {
+        var xPosition = d3.mouse(this)[0] - 15;
+        var yPosition = d3.mouse(this)[1] - 25;
+        tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+        tooltip.select("text").text("hi");
+      })
     .enter().append("rect")
-      .attr("transform", "translate(6)")
-      .attr("class", "respondentsBar")
-      .attr("x", function(d) { return x(d.course); })
       .attr("width", x.rangeBand())
-      .attr("y", function(d) { return y(d.respondents); })
-      .attr("height", function(d) { return height - y(d.respondents); })
-      .on('mouseover', respondentsTip.show)
-      .on('mouseout', respondentsTip.hide);
+      .attr("y", function(d) { return y(d.y1); })
+      .attr("height", function(d) { return y(d.y0) - y(d.y1); })
+      .style("fill", function(d) { return color(d.name); });
+  /*
+  var legend = svg.selectAll(".legend")
+      .data(color.domain().slice())
+    .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+  legend.append("rect")
+      .attr("x", width - 18)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", color);
+
+  legend.append("text")
+      .attr("x", width - 24)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .text(function(d) { return d; });
+  */
+// Prep the tooltip bits, initial display is hidden
+var tooltip = svg.append("g")
+  .attr("class", "tooltip")
+  .style("display", "none");
+    
+tooltip.append("rect")
+  .attr("width", 30)
+  .attr("height", 20)
+  .attr("fill", "white")
+  .style("opacity", 0.5);
+
+tooltip.append("text")
+  .attr("x", 15)
+  .attr("dy", "1.2em")
+  .style("text-anchor", "middle")
+  .attr("font-size", "12px")
+  .attr("font-weight", "bold");
 });
 
-
-/* ============================================================
-    BUTTON FUNCTIONS
- ============================================================ */
-function setEmployed() {
-  if (drawEmployed)
-    drawEmployed = false;
-  else
-    drawEmployed = true;
-
-  draw();
-}
-
-function setUnemployed() {
-  if (drawUnemployed)
-    drawUnemployed = false;
-  else
-    drawUnemployed = true;
-
-  draw();
-}
-
-function setFurtherStudies() {
-  if (drawFurtherStudies)
-    drawFurtherStudies = false;
-  else
-    drawFurtherStudies = true;
-
-  draw();
-}
-
-function setVacation() {
-  if (drawVacation)
-    drawVacation = false;
-  else
-    drawVacation = true;
-
-  draw();
-}
-
-function setVocational() {
-  if (drawVocational)
-    drawVocational = false;
-  else
-    drawVocational = true;
-
-  draw();
-}
-
-function setYear (year) {
-  fileName = "src/" + year + ".csv";
-  if (drawNumRespondents) {
-    drawRespondents();
-  } else {
-    draw();
-  }
-}
-
-
-/* ============================================================
-    DRAWING FUNCTIONS
- ============================================================ */
-function drawRespondents() {
-  drawNumRespondents = true;
-  drawEmployed = false;
-  drawUnemployed = false;
-  drawFurtherStudies = false;
-  drawVacation = false;
-  drawVocational = false;
-
-  var hi = d3.select("#yearnav");
-  hi.selectAll("*").remove();
-
-  var svg = d3.select("svg");
-  svg.selectAll("*").remove();
-
-  svg = d3.select("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-  d3.csv(fileName, type, function(error, data) {
-    x.domain(data.map(function(d) { return d.course; }));
-    y.domain([0, d3.max(data, function(d) { return d.respondents; })]);
-
-    svg.append("g")
-        .attr("class", "x axis")
-        .style('fill', '#333')
-        .attr("transform", "translate(6," + height + ")")
-        .call(xAxis)
-        .selectAll("text")  
-          .style("text-anchor", "end")
-          .attr("dx", "-.8em")
-          .attr("dy", ".15em")
-          .attr("transform", "rotate(-65)" );
-
-    svg.append("g")
-        .attr("class", "y axis")
-        .style('fill', '#333')
-        .call(yAxis)
-      .append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", 6)
-        .attr("dy", ".71em")
-        .style("text-anchor", "end")
-        .text("Number of Respondents");
-
-      svg.selectAll(".respondentsBar")
-          .data(data)
-        .enter().append("rect")
-          .attr("transform", "translate(6)")
-          .attr("class", "respondentsBar")
-          .attr("x", function(d) { return x(d.course); })
-          .attr("width", x.rangeBand())
-          .attr("y", function(d) { return y(d.respondents); })
-          .attr("height", function(d) { return height - y(d.respondents); })
-          .on('mouseover', respondentsTip.show)
-          .on('mouseout', respondentsTip.hide);
-
-    });
-
-d3.select('#yearnav').call(d3.slider().axis(true).min(2010).max(2014));
-}
-
-function draw() {
-  drawNumRespondents = false;
-  var hi = d3.select("#yearnav");
-  hi.selectAll("*").remove();
-
-  var svg = d3.select("svg");
-  svg.selectAll("*").remove();
-
-
-  svg = d3.select("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-  d3.csv(fileName, type, function(error, data) {
-    x.domain(data.map(function(d) { return d.course; }));
-    y.domain([0, 1]);
-
-    svg.append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-
-    svg.append("g")
-        .attr("class", "x axis")
-        .style('fill', '#333')
-        .attr("transform", "translate(6," + height + ")")
-        .call(xAxis)
-        .selectAll("text")  
-          .style("text-anchor", "end")
-          .attr("dx", "-.8em")
-          .attr("dy", ".15em")
-          .attr("transform", "rotate(-65)" );
-
-    svg.append("g")
-        .attr("class", "y axis")
-        .style('fill', '#333')
-        .call(yAxis)
-      .append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", 6)
-        .attr("dy", ".71em")
-        .style("text-anchor", "end")
-        .text("Number of Respondents");
-
-    if (drawEmployed) {
-      svg.selectAll(".employedBar")
-          .data(data)
-        .enter().append("rect")
-          .attr("transform", "translate(6)")
-          .attr("class", "employedBar")
-          .attr("x", function(d) { return x(d.course); })
-          .attr("width", x.rangeBand())
-          .attr("y", function(d) { return y(d.employed); })
-          .attr("height", function(d) { return height - y(d.employed); })
-          .on('mouseover', employedTip.show)
-          .on('mouseout', employedTip.hide)
-    }
-
-    if (drawFurtherStudies) {
-      svg.selectAll(".furtherStudiesBar")
-          .data(data)
-        .enter().append("rect")
-          .attr("transform", "translate(6)")
-          .attr("class", "furtherStudiesBar")
-          .attr("x", function(d) { return x(d.course); })
-          .attr("width", x.rangeBand())
-          .attr("y", function(d) { return y(d.furtherstudies); })
-          .attr("height", function(d) { return height - y(d.furtherstudies); })
-          .on('mouseover', furtherStudiesTip.show)
-          .on('mouseout', furtherStudiesTip.hide)
-    }
-
-    if (drawUnemployed) {
-      svg.selectAll(".unemployedBar")
-          .data(data)
-        .enter().append("rect")
-          .attr("transform", "translate(6)")
-          .attr("class", "unemployedBar")
-          .attr("x", function(d) { return x(d.course); })
-          .attr("width", x.rangeBand())
-          .attr("y", function(d) { return y(d.unemployed); })
-          .attr("height", function(d) { return height - y(d.unemployed); })
-          .on('mouseover', unemployedTip.show)
-          .on('mouseout', unemployedTip.hide)
-    }
-
-    if (drawVacation) {
-      svg.selectAll(".vacationBar")
-          .data(data)
-        .enter().append("rect")
-          .attr("transform", "translate(6)")
-          .attr("class", "vacationBar")
-          .attr("x", function(d) { return x(d.course); })
-          .attr("width", x.rangeBand())
-          .attr("y", function(d) { return y(d.vacation); })
-          .attr("height", function(d) { return height - y(d.vacation); })
-          .on('mouseover', vacationTip.show)
-          .on('mouseout', vacationTip.hide)
-    }
-
-    if (drawVocational) {
-      svg.selectAll(".vocationalBar")
-          .data(data)
-        .enter().append("rect")
-          .attr("transform", "translate(6)")
-          .attr("class", "vocationalBar")
-          .attr("x", function(d) { return x(d.course); })
-          .attr("width", x.rangeBand())
-          .attr("y", function(d) { return y(d.vocational); })
-          .attr("height", function(d) { return height - y(d.vocational); })
-          .on('mouseover', vocationalTip.show)
-          .on('mouseout', vocationalTip.hide)
-    }
-  });
-
-d3.select('#yearnav').call(d3.slider().axis(true).min(2010).max(2014));
-}
-var axis = d3.svg.axis().ticks(5);
-d3.select('#yearnav').call(d3.slider().axis(axis).min(2010).max(2014).step(1));
-
-function type(d) {
-  d.respondents = +d.respondents;
-  return d;
-}
-
 </script>
+
+
+
+</body>

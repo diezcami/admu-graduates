@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <title>ADMU Graduates Data Visualization</title>
 <meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="src/d3-slider.css">
 <link rel="stylesheet" type="text/css" href="src/style.css">
+
 
 <body>
 <div id ="newheader">
@@ -9,68 +11,71 @@
 A representation of post-graduation data from ADMU alumni from 2010-2014.
 <BR /><BR />
 </div>
+<div class="wrapper">
+  <div id="nav">
+      <input name="numberOfRespondents" 
+             type="button" 
+             value="Number of Respondents" 
+             onclick="drawRespondents();" />
 
-<div id="nav">
-    <input name="numberOfRespondents" 
-           type="button" 
-           value="Number of Respondents" 
-           onclick="drawRespondents();" />
+      <input name="employed" 
+             type="button" 
+             value="Employed" 
+             onclick="setEmployed();" />
 
-    <input name="employed" 
-           type="button" 
-           value="Employed" 
-           onclick="setEmployed();" />
+      <input name="unemployed" 
+             type="button" 
+             value="Unemployed" 
+             onclick="setUnemployed();" />
 
-    <input name="unemployed" 
-           type="button" 
-           value="Unemployed" 
-           onclick="setUnemployed();" />
+      <input name="furtherStudies" 
+             type="button" 
+             value="Further Studies" 
+             onclick="setFurtherStudies();" />
 
-    <input name="furtherStudies" 
-           type="button" 
-           value="Further Studies" 
-           onclick="setFurtherStudies();" />
+      <input name="vacation" 
+             type="button" 
+             value="Vacation" 
+             onclick="setVacation();" />
 
-    <input name="vacation" 
-           type="button" 
-           value="Vacation" 
-           onclick="setVacation();" />
+      <input name="vocational" 
+             type="button" 
+             value="Vocational" 
+             onclick="setVocational();" />
 
-    <input name="vocational" 
-           type="button" 
-           value="Vocational" 
-           onclick="setVocational();" />
+      <BR /> 
+      
+      <input name="2010" 
+             type="button" 
+             value="2010" 
+             onclick="setYear('2010');" />
 
-    <BR /> 
-    
-    <input name="2010" 
-           type="button" 
-           value="2010" 
-           onclick="setYear('2010');" />
+      <input name="2011" 
+             type="button" 
+             value="2011" 
+             onclick="setYear('2011');" />
 
-    <input name="2011" 
-           type="button" 
-           value="2011" 
-           onclick="setYear('2011');" />
+      <input name="2012" 
+             type="button" 
+             value="2012" 
+             onclick="setYear('2012');" />    
 
-    <input name="2012" 
-           type="button" 
-           value="2012" 
-           onclick="setYear('2012');" />    
+      <input name="2013" 
+             type="button" 
+             value="2013" 
+             onclick="setYear('2013');" />
 
-    <input name="2013" 
-           type="button" 
-           value="2013" 
-           onclick="setYear('2013');" />
+      <input name="2014" 
+             type="button" 
+             value="2014" 
+             onclick="setYear('2014');" />    
+  </div>
 
-    <input name="2014" 
-           type="button" 
-           value="2014" 
-           onclick="setYear('2014');" />    
+
 </div>
 <script src="src/d3.min.js"></script>
-<!-- <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script> -->
 <script src="src/d3.tip.js"></script>
+
 <script>
 /* ============================================================
     VARIABLE DECLARATIONS
@@ -81,14 +86,14 @@ var drawUnemployed = false;
 var drawFurtherStudies = false;
 var drawVacation = false;
 var drawVocational = false;
-var fileName = "src/2014.csv";
+var fileName = "data/2014.csv";
 
 /* ============================================================
     D3 GRAPH SETUP
  ============================================================ */
-var margin = {top: 40, right: 20, bottom: 830, left: 40},
+var margin = {top: 40, right: 20, bottom: 250, left: 40},
     width = 1050 - margin.left - margin.right,
-    height = 1000 - margin.top - margin.bottom;
+    height = 600 - margin.top - margin.bottom;
 
 var formatPercent = d3.format(".0%");
 
@@ -170,34 +175,39 @@ svg.call(vocationalTip);
 /* ============================================================
     CSV DECLARATION
  ============================================================ */ 
+
 d3.csv(fileName, type, function(error, data) {
   x.domain(data.map(function(d) { return d.course; }));
   y.domain([0, d3.max(data, function(d) { return d.respondents; })]);
 
   svg.append("g")
       .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
+      .attr("transform", "translate(6," + height + ")")
+      .style('fill', '#333')
       .call(xAxis)
       .selectAll("text")  
         .style("text-anchor", "end")
         .attr("dx", "-.8em")
         .attr("dy", ".15em")
-        .attr("transform", "rotate(270)" );
+        .attr("transform", "rotate(-65)" );
 
   svg.append("g")
       .attr("class", "y axis")
+      .style('fill', '#333')
       .call(yAxis)
-      .style('fill', '#FFF')
     .append("text")
       .attr("transform", "rotate(-90)")
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
+      .style('fill', '#333')
       .text("Number of Respondents");
+
 
   svg.selectAll(".respondentsBar")
       .data(data)
     .enter().append("rect")
+      .attr("transform", "translate(6)")
       .attr("class", "respondentsBar")
       .attr("x", function(d) { return x(d.course); })
       .attr("width", x.rangeBand())
@@ -205,9 +215,8 @@ d3.csv(fileName, type, function(error, data) {
       .attr("height", function(d) { return height - y(d.respondents); })
       .on('mouseover', respondentsTip.show)
       .on('mouseout', respondentsTip.hide);
-
-  svg.attr("transform","rotate(90 200 200)");
 });
+
 
 /* ============================================================
     BUTTON FUNCTIONS
@@ -258,7 +267,7 @@ function setVocational() {
 }
 
 function setYear (year) {
-  fileName = "src/" + year + ".csv";
+  fileName = "data/" + year + ".csv";
   if (drawNumRespondents) {
     drawRespondents();
   } else {
@@ -281,13 +290,20 @@ function drawRespondents() {
   var svg = d3.select("svg");
   svg.selectAll("*").remove();
 
+  svg = d3.select("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
   d3.csv(fileName, type, function(error, data) {
     x.domain(data.map(function(d) { return d.course; }));
     y.domain([0, d3.max(data, function(d) { return d.respondents; })]);
 
     svg.append("g")
         .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
+        .style('fill', '#333')
+        .attr("transform", "translate(6," + height + ")")
         .call(xAxis)
         .selectAll("text")  
           .style("text-anchor", "end")
@@ -297,6 +313,7 @@ function drawRespondents() {
 
     svg.append("g")
         .attr("class", "y axis")
+        .style('fill', '#333')
         .call(yAxis)
       .append("text")
         .attr("transform", "rotate(-90)")
@@ -308,6 +325,7 @@ function drawRespondents() {
       svg.selectAll(".respondentsBar")
           .data(data)
         .enter().append("rect")
+          .attr("transform", "translate(6)")
           .attr("class", "respondentsBar")
           .attr("x", function(d) { return x(d.course); })
           .attr("width", x.rangeBand())
@@ -316,22 +334,33 @@ function drawRespondents() {
           .on('mouseover', respondentsTip.show)
           .on('mouseout', respondentsTip.hide);
 
-      svg.attr("transform","rotate(90 200 200)");
     });
 }
 
 function draw() {
   drawNumRespondents = false;
+
   var svg = d3.select("svg");
   svg.selectAll("*").remove();
+
+
+  svg = d3.select("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   d3.csv(fileName, type, function(error, data) {
     x.domain(data.map(function(d) { return d.course; }));
     y.domain([0, 1]);
 
     svg.append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
+    svg.append("g")
         .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
+        .style('fill', '#333')
+        .attr("transform", "translate(6," + height + ")")
         .call(xAxis)
         .selectAll("text")  
           .style("text-anchor", "end")
@@ -341,18 +370,20 @@ function draw() {
 
     svg.append("g")
         .attr("class", "y axis")
+        .style('fill', '#333')
         .call(yAxis)
       .append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", 6)
         .attr("dy", ".71em")
         .style("text-anchor", "end")
-        .text("Percentage of Respondents");
+        .text("Number of Respondents");
 
     if (drawEmployed) {
       svg.selectAll(".employedBar")
           .data(data)
         .enter().append("rect")
+          .attr("transform", "translate(6)")
           .attr("class", "employedBar")
           .attr("x", function(d) { return x(d.course); })
           .attr("width", x.rangeBand())
@@ -366,6 +397,7 @@ function draw() {
       svg.selectAll(".furtherStudiesBar")
           .data(data)
         .enter().append("rect")
+          .attr("transform", "translate(6)")
           .attr("class", "furtherStudiesBar")
           .attr("x", function(d) { return x(d.course); })
           .attr("width", x.rangeBand())
@@ -379,6 +411,7 @@ function draw() {
       svg.selectAll(".unemployedBar")
           .data(data)
         .enter().append("rect")
+          .attr("transform", "translate(6)")
           .attr("class", "unemployedBar")
           .attr("x", function(d) { return x(d.course); })
           .attr("width", x.rangeBand())
@@ -392,6 +425,7 @@ function draw() {
       svg.selectAll(".vacationBar")
           .data(data)
         .enter().append("rect")
+          .attr("transform", "translate(6)")
           .attr("class", "vacationBar")
           .attr("x", function(d) { return x(d.course); })
           .attr("width", x.rangeBand())
@@ -405,6 +439,7 @@ function draw() {
       svg.selectAll(".vocationalBar")
           .data(data)
         .enter().append("rect")
+          .attr("transform", "translate(6)")
           .attr("class", "vocationalBar")
           .attr("x", function(d) { return x(d.course); })
           .attr("width", x.rangeBand())
@@ -413,15 +448,11 @@ function draw() {
           .on('mouseover', vocationalTip.show)
           .on('mouseout', vocationalTip.hide)
     }
-
-    svg.attr("transform","rotate(90 200 200)");
   });
-
 }
 
-
 function type(d) {
-  d.employed = +d.employed;
+  d.respondents = +d.respondents;
   return d;
 }
 
