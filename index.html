@@ -78,11 +78,9 @@ A representation of post-graduation data from ADMU alumni from 2010-2014.
 
 <script>
 
-var margin = {top: 40, right: 5, bottom: 250, left: 40},
-    width = 1050 - margin.left - margin.right,
+var margin = {top: 40, right: 0, bottom: 250, left: 50},
+    width = 1150 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
-
-var formatPercent = d3.format(".0%");
 
 var x = d3.scale.ordinal()
     .rangeRoundBands([0, width], .1);
@@ -91,7 +89,7 @@ var y = d3.scale.linear()
     .range([height, 0]);
 
 var color = d3.scale.ordinal()
-    .range(["#ffc65d", "#7bc8a4", "#f16745", "#4cc3d9", "#93648D"]);
+    .range(["#ffc65d", "#7bc8a4", "#f16745", "#4cc3d9", "#93648D", "#00B2EE", "#FF99CC"]);
 
 var xAxis = d3.svg.axis()
     .scale(x)
@@ -141,7 +139,7 @@ d3.csv("data/2014.csv", function(error, data) {
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Population");
+      .text("Percentage of Respondents");
 
   var state = svg.selectAll(".state")
       .data(data)

@@ -1,46 +1,45 @@
-Respondents,Employed,Employed And FutherStudies,Further Studies,Resigned,Unemployed,Vacation,Vocational
-1,0,0,100,0,0,0,0
-36,58,6,22,0,8,3,3
-7,43,14,43,0,0,0,0
-8,63,25,13,0,0,0,0
-1,0,0,100,0,0,0,0
-3,67,0,33,0,0,0,0
-7,86,0,0,0,14,0,0
-25,88,0,0,0,12,0,0
-45,78,9,11,0,2,0,0
-1,100,0,0,0,0,0,0
-15,40,13,40,0,7,0,0
-89,76,4,13,0,6,0,0
-2,100,0,0,0,0,0,0
-14,79,0,14,0,7,0,0
-52,88,0,6,0,6,0,0
-3,100,0,0,0,0,0,0
-8,13,25,50,0,13,0,0
-6,83,0,17,0,0,0,0
-10,100,0,0,0,0,0,0
-20,90,0,10,0,0,0,0
-8,88,13,0,0,0,0,0
-7,71,0,29,0,0,0,0
-43,14,5,79,0,2,0,0
-16,19,0,81,0,0,0,0
-2,100,0,0,0,0,0,0
-39,87,3,5,0,3,0,3
-1,100,0,0,0,0,0,0
-61,87,5,5,0,3,0,0
-3,0,0,100,0,0,0,0
-3,67,0,33,0,0,0,0
-1,100,0,0,0,0,0,0
-8,63,0,25,0,0,0,13
-10,70,20,10,0,0,0,0
-3,100,0,0,0,0,0,0
-15,73,20,7,0,0,0,0
-17,94,6,0,0,0,0,0
-5,20,20,0,0,40,20,0
-11,45,9,27,0,18,0,0
-35,74,11,14,0,0,0,0
-27,44,4,48,0,0,4,0
-6,67,0,33,0,0,0,0
-4,25,25,50,0,0,0,0
-4,25,0,75,0,0,0,0
-30,63,0,17,0,17,3,0
-723,68,5,21,0,4,1,0
+course,respondents,Employed,Employed And FutherStudies,Further Studies,Resigned,Unemployed,Vacation,Vocational
+AB Humanities,1,0,0,100,0,0,0,0
+AB Interdisciplinary Studies,36,58,6,22,0,8,3,3
+AB Lit. (Eng.),7,43,14,43,0,0,0,0
+AB Philo.,8,63,25,13,0,0,0,0
+AB Philo (Pre-Divinity),1,0,0,100,0,0,0,0
+BFA Art Management,3,67,0,33,0,0,0,0
+BFA Creative Writing,7,86,0,0,0,14,0,0
+BFA Information Design,25,88,0,0,0,12,0,0
+BS Communications Technology Management,45,78,9,11,0,2,0,0
+BS Information Technology Entrepreneurship,1,100,0,0,0,0,0,0
+BS Legal Management,15,40,13,40,0,7,0,0
+BS Management (Standard Program),89,76,4,13,0,6,0,0
+BS Management (Honors),2,100,0,0,0,0,0,0
+BS Management of Applied Chemistry,14,79,0,14,0,7,0,0
+BS Management Engineering,52,88,0,6,0,6,0,0
+BS Applied Physics with Applied Computer Systems,3,100,0,0,0,0,0,0
+BS Biology,8,13,25,50,0,13,0,0
+BS Chemistry with Materials Science Engineering,6,83,0,17,0,0,0,0
+BS Computer Engineering,10,100,0,0,0,0,0,0
+BS Computer Science,20,90,0,10,0,0,0,0
+BS Electronics Engineering,8,88,13,0,0,0,0,0
+BS Environmental Science,7,71,0,29,0,0,0,0
+BS Health Sciences,43,14,5,79,0,2,0,0
+BS Life Sciences,16,19,0,81,0,0,0,0
+BS Mathematics,2,100,0,0,0,0,0,0
+BS Management Information Systems,39,87,3,5,0,3,0,3
+BS Physics with Materials and Science Engineering,1,100,0,0,0,0,0,0
+"BSM Applied Mathematics, Major in Mathematical Finance",61,87,5,5,0,3,0,0
+BS-MS Chemistry,3,0,0,100,0,0,0,0
+AB Chinese Studies,3,67,0,33,0,0,0,0
+AB Chinese Studies - Business Track,1,100,0,0,0,0,0,0
+AB Development Studies,8,63,0,25,0,0,0,13
+AB Economics,10,70,20,10,0,0,0,0
+AB Economics (Honors),3,100,0,0,0,0,0,0
+AB European Studies,15,73,20,7,0,0,0,0
+AB Management Economics,17,94,6,0,0,0,0,0
+AB History,5,20,20,0,0,40,20,0
+AB Political Science,11,45,9,27,0,18,0,0
+AB Psychology,35,74,11,14,0,0,0,0
+BS Psychology,27,44,4,48,0,0,4,0
+AB Social Sciences,6,67,0,33,0,0,0,0
+AB-MA Political Science,4,25,25,50,0,0,0,0
+AB Political Science - Masters in Public Management,4,25,0,75,0,0,0,0
+Unspecified Courses,30,63,0,17,0,17,3,0
