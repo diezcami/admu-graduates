@@ -176,10 +176,11 @@ function createGraph(year) {
         }
       })
       .on("mouseout",function(){
-        svg.select(".tooltip").remove();
-        d3.select(this)
-          .attr("opacity", 1);
-                              
+        if(!absoluteView){
+          svg.select(".tooltip").remove();
+          d3.select(this)
+            .attr("opacity", 1);
+        }                  
       })    
   /* ==================================================================
       CSV DECLARATION: ABSOLUTE VIEW
