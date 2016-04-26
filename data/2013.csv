@@ -1,45 +1,45 @@
-course,respondents,employed,furtherstudies,unemployed,vacation,vocational
-AB Humanities,16,0.63,0,0,0,0
-AB Interdisciplinary Studies,9,0.56,0.11,0.11,0,0
-AB Lit. (Eng.),16,0.56,0,0,0,0
-AB Philo.,28,0.82,0,0,0,0
-AB Philo (Pre-Divinity),24,0.71,0,0.04,0,0
-BFA Art Management,32,0.94,0.03,0,0,0
-BFA Creative Writing,33,0.06,0.03,0,0,0
-BFA Information Design,10,0.9,0.1,0,0,0
-BS Communications Technology Management,33,0.45,0.06,0.03,0.06,0
-BS Information Technology Entrepreneurship,12,0.92,0,0,0,0
-BS Legal Management,27,0.56,0.07,0.11,0,0
-BS Management (Standard Program),37,0.27,0.49,0.08,0,0
-BS Management (Honors),11,0.91,0,0.09,0,0
-BS Management of Applied Chemistry,36,0.17,0.06,0.06,0.03,0
-BS Management Engineering,28,0.21,0,0,0,0
-BS Applied Physics with Applied Computer Systems,9,0.56,0,0,0,0
-BS Biology,10,0.3,0,0.1,0,0
-BS Chemistry with Materials Science Engineering,25,0.12,0.6,0,0.04,0
-BS Computer Engineering,32,1,0,0,0,0
-BS Computer Science,23,0.91,0,0,0.04,0
-BS Electronics Engineering,20,0.6,0,0.15,0,0
-BS Environmental Science,18,0.44,0.06,0,0.06,0
-BS Health Sciences,34,0.74,0,0,0,0
-BS Life Sciences,23,0.13,0.7,0.04,0,0
-BS Mathematics,18,0.28,0.06,0.22,0.11,0
-BS Management Information Systems,36,0.83,0,0,0.03,0
-BS Physics with Materials and Science Engineering,45,0.31,0.36,0.04,0.09,0
-"BSM Applied Mathematics, Major in Mathematical Finance",16,0.81,0.19,0,0,0
-BS-MS Chemistry,34,0.79,0.06,0,0,0
-AB Chinese Studies,16,0.63,0,0,0.06,0
-AB Chinese Studies - Business Track,24,0.67,0,0.04,0.04,0
-AB Development Studies,27,0.41,0.44,0.04,0.07,0
-AB Economics,9,0.33,0,0,0,0
-AB Economics (Honors),19,0.11,0.63,0.05,0,0
-AB European Studies,22,0,0,0.14,0.27,0
-AB Management Economics,17,0.94,0.06,0,0,0
-AB History,2,0,0.5,0,0,0
-AB Political Science,43,0.37,0.07,0.16,0.02,0
-AB Psychology,14,0.21,0.21,0.07,0.14,0
-BS Psychology,41,0.17,0.02,0,0,0
-AB Social Sciences,22,0.27,0.14,0,0,0
-AB-MA Political Science,0,0,0,0,0,0
-AB Political Science - Masters in Public Management,29,0.21,0.69,0,0,0
-Unspecified Courses,36,0.72,0.06,0.03,0.11,0
+course,respondents,Employed,Employed And Further Studies,Further Studies,Resigned,Unemployed,Vacation,Vocational
+AB Humanities,209,23,5,50,30,45,13,43
+AB Interdisciplinary Studies,239,12,8,39,48,47,36,49
+AB Lit. (Eng.),197,41,6,21,28,37,18,46
+AB Philo.,179,36,16,7,38,27,35,20
+AB Philo (Pre-Divinity),201,35,17,24,39,9,44,33
+BFA Art Management,135,12,11,25,43,26,11,7
+BFA Creative Writing,156,39,36,17,24,8,11,21
+BFA Information Design,221,41,31,36,24,1,44,44
+BS Communications Technology Management,153,20,48,12,13,49,2,9
+BS Information Technology Entrepreneurship,198,45,4,15,38,45,28,23
+BS Legal Management,185,10,33,32,19,43,8,40
+BS Management (Standard Program),256,43,35,30,49,32,42,25
+BS Management (Honors),211,36,36,38,23,5,23,50
+BS Management of Applied Chemistry,192,19,21,36,47,27,9,33
+BS Management Engineering,169,1,23,28,22,49,8,38
+BS Applied Physics with Applied Computer Systems,110,1,2,15,8,12,32,40
+BS Biology,207,23,47,21,19,31,44,22
+BS Chemistry with Materials Science Engineering,205,28,2,15,31,44,42,43
+BS Computer Engineering,150,19,18,2,9,31,40,31
+BS Computer Science,201,14,25,39,39,28,41,15
+BS Electronics Engineering,180,30,37,41,3,46,8,15
+BS Environmental Science,131,32,26,13,4,8,5,43
+BS Health Sciences,242,7,46,49,49,36,44,11
+BS Life Sciences,194,11,21,44,48,18,42,10
+BS Mathematics,185,28,47,29,8,24,17,32
+BS Management Information Systems,181,32,18,40,12,25,26,28
+BS Physics with Materials and Science Engineering,174,14,34,23,38,29,10,26
+"BSM Applied Mathematics, Major in Mathematical Finance",237,10,32,44,43,50,14,44
+BS-MS Chemistry,259,48,46,42,41,22,42,18
+AB Chinese Studies,203,28,13,28,45,40,17,32
+AB Chinese Studies - Business Track,223,28,35,23,45,23,29,40
+AB Development Studies,196,6,37,31,28,37,21,36
+AB Economics,243,43,17,16,50,48,34,35
+AB Economics (Honors),221,46,45,50,15,8,23,34
+AB European Studies,152,5,47,46,41,4,6,3
+AB Management Economics,212,7,34,39,39,42,25,26
+AB History,149,28,23,5,43,11,6,33
+AB Political Science,212,36,20,26,42,32,11,45
+AB Psychology,194,35,35,8,26,41,27,22
+BS Psychology,247,24,31,46,45,25,28,48
+AB Social Sciences,212,4,50,33,29,45,41,10
+AB-MA Political Science,239,46,47,42,24,28,41,11
+AB Political Science - Masters in Public Management,148,11,33,12,36,4,6,46
+Unspecified Courses,123,25,20,7,42,10,13,6
