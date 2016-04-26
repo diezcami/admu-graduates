@@ -62,7 +62,7 @@ var yRelative = d3.scale.linear() // for absolute scale
     .rangeRound([height, 0]);
 
 var color = d3.scale.ordinal()
-  .range(["#ffc65d", "#7bc8a4", "#f16745", "#4cc3d9", "#93648D", "#00B2EE", "#FF99CC"]);
+  .range(["#ffc65d", "#fc913a", "#7bc8a4", "#96cea4", "#f16745", "#ff6f69", "#ff8f7a"]);
 
 var xAxis = d3.svg.axis()
   .scale(x)
@@ -263,9 +263,8 @@ function createGraph(year) {
       .data([30,30])
       .enter().append("g")
       .attr("class","clickButton")
-      .attr("transform","translate(0," + 180 +")"); 
-        
-        
+      .attr("transform","translate(-30," + 160 +")"); 
+             
     clickButton.append("text")
       .attr("x", width + legend_width)
       .attr("y", 9)
@@ -273,8 +272,9 @@ function createGraph(year) {
         .style("text-anchor", "end")
       .text("Switch View")
       .style("text-decoration", "underline") 
+      .attr("font-family", "sans-serif")
       .style("font-size", "16px")
-      .attr("fill","blue")
+      .attr("fill","#444")
       .attr("id","clickChangeView") ;      
       
     // Init
