@@ -234,7 +234,8 @@ function createGraph(year) {
       .style("text-anchor", "end")
       .text("Percentage of Respondents");
            
-    svg.select(".y.axis.absolute").style("opacity",absoluteView?1:0);    
+    svg.select(".y.axis.absolute").style("opacity",absoluteView?1:0);
+    svg.select(".y.axis.relative").style("opacity",absoluteView?0:1);  
     
   /* ==================================================================
       LEGEND DECLARATION
