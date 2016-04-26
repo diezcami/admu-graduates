@@ -1,4 +1,4 @@
-/*@font-face{
+@font-face{
   font-family: "BentonSans";
   src: url("http://s1.ft-static.com/m/font/ft-velcro/bentonsans-regular.eot");
   src: url("http://s1.ft-static.com/m/font/ft-velcro/bentonsans-regular.eot?#iefix") format("embedded-opentype"), 
@@ -15,7 +15,7 @@
   url("http://interactivegraphics.ft-static.com/inc/fonts/BentonSansBold.ttf") format("truetype");
   font-style: normal;
   font-weight: bold;
-}*/
+}
 body {
   font-family:"BentonSans",sans-serif;
   cursor:default;

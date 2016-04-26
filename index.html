@@ -11,44 +11,33 @@
 A representation of post-graduation data from ADMU alumni from 2010-2014.
 <BR /><BR />
 </div>
-<div class="wrapper">
   <div id="nav">
       <input name="2010" 
              type="button" 
              value="2010" 
-             onclick="refreshGraph('2010');" />
+             onclick="refreshGraph(2010);" />
 
       <input name="2011" 
              type="button" 
              value="2011" 
-             onclick="refreshGraph('2011');" />
+             onclick="refreshGraph(2011);" />
 
       <input name="2012" 
              type="button" 
              value="2012" 
-             onclick="refreshGraph('2012');" />    
+             onclick="refreshGraph(2012);" />    
 
       <input name="2013" 
              type="button" 
              value="2013" 
-             onclick="refreshGraph('2013');" />
+             onclick="refreshGraph(2013);" />
 
       <input name="2014" 
              type="button" 
              value="2014" 
-             onclick="refreshGraph('2014');" />    
-
-
-      <BR />
-
-      <input name="changeView" 
-             type="button" 
-             value="Switch View" 
-             onclick="changeView();" />   
+             onclick="refreshGraph(2014);" />    
   </div>
 
-
-</div>
 <script src="d3-src/d3.min.js"></script>
 <script src="d3-src/d3.tip.js"></script>
 
@@ -56,49 +45,50 @@ A representation of post-graduation data from ADMU alumni from 2010-2014.
 /* ==================================================================
     VARIABLE DECLARATIONS
 ===================================================================== */ 
-  var legend_width = 120;
+var legend_width = 150;
+var absoluteView = false;
 
-  var margin = {top: 40, right: 0, bottom: 250, left: 50},
-    width = 1150 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+var margin = {top: 40, right: 0, bottom: 250, left: 50},
+  width = 1150 - margin.left - margin.right,
+  height = 600 - margin.top - margin.bottom;
 
-  var x = d3.scale.ordinal()
-    .rangeRoundBands([0, width], .1);
+var x = d3.scale.ordinal()
+  .rangeRoundBands([0, width], .1);
 
-  var yAbsolute = d3.scale.linear() // for absolute scale
+var yAbsolute = d3.scale.linear() // for absolute scale
+  .rangeRound([height, 0]);
+
+var yRelative = d3.scale.linear() // for absolute scale
     .rangeRound([height, 0]);
 
-  var yRelative = d3.scale.linear() // for absolute scale
-      .rangeRound([height, 0]);
+var color = d3.scale.ordinal()
+  .range(["#ffc65d", "#7bc8a4", "#f16745", "#4cc3d9", "#93648D", "#00B2EE", "#FF99CC"]);
 
-  var color = d3.scale.ordinal()
-    .range(["#ffc65d", "#7bc8a4", "#f16745", "#4cc3d9", "#93648D", "#00B2EE", "#FF99CC"]);
+var xAxis = d3.svg.axis()
+  .scale(x)
+  .orient("bottom");
 
-  var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom");
+var yAxisRelative = d3.svg.axis()
+  .scale(yRelative)
+  .orient("left")
+  .tickFormat(d3.format(".1%"));
 
-  var yAxisRelative = d3.svg.axis()
-    .scale(yRelative)
-    .orient("left")
-    .tickFormat(d3.format(".1%"));
+var yAxisAbsolute = d3.svg.axis()
+  .scale(yAbsolute)
+  .orient("left")
+  .tickFormat(d3.format(".2s"));
 
-  var yAxisAbsolute = d3.svg.axis()
-    .scale(yAbsolute)
-    .orient("left")
-    .tickFormat(d3.format(".2s"));
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right + legend_width)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 function createGraph(year) {
   var fileName = "data/" + year + ".csv";
   /* ==================================================================
       CSV DECLARATION
   ===================================================================== */ 
-  var svg = d3.select("body").append("svg")
-    .attr("width", width + margin.left + margin.right+legend_width)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
   d3.csv(fileName, function(error, data) {
     color.domain(d3.keys(data[0]).filter(function(key) { return key !== "course" && key !== "respondents"}));
     data.forEach(function(d) {
@@ -127,7 +117,6 @@ function createGraph(year) {
     yAbsolute.domain([0, d3.max(data, function(d) { return d.total; })]); // Absolute View Domain 
     yRelative.domain([0,1]) // Relative View domain 
    
-    var absoluteView = false // Initial View is Relative
     svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
@@ -166,7 +155,8 @@ function createGraph(year) {
       .attr("id",function(d) {return d.mycourse})
       .attr("class","relative")
       .attr("id",function(d) {return d.mycourse})
-      .style("pointer-events","all");
+      .style("pointer-events","all")
+      .attr("opacity",absoluteView?0:1);
        
     courseRelative.selectAll("rect")
       .on("mouseover", function(d){
@@ -219,7 +209,7 @@ function createGraph(year) {
       })
       .attr("class","absolute")
       .style("pointer-events","all")
-      .attr("opacity",0); // Initially invisible
+      .attr("opacity",absoluteView?1:0); // Initially invisible
             
   /* ==================================================================
       DEFINE 2 SCALES, ONE OF WHICH IS ALWAYS HIDDEN
@@ -244,7 +234,7 @@ function createGraph(year) {
       .style("text-anchor", "end")
       .text("Percentage of Respondents");
            
-    svg.select(".y.axis.absolute").style("opacity",0);    
+    svg.select(".y.axis.absolute").style("opacity",absoluteView?1:0);    
     
   /* ==================================================================
       LEGEND DECLARATION
@@ -256,13 +246,13 @@ function createGraph(year) {
         .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
     legend.append("rect")
-      .attr("x", width - 18+legend_width)
+      .attr("x", width - 18 + legend_width)
       .attr("width", 18)
         .attr("height", 18)
         .attr("fill", color);
 
     legend.append("text")
-      .attr("x", width - 24+legend_width)
+      .attr("x", width - 24 + legend_width)
       .attr("y", 9)
         .attr("dy", ".35em")
         .style("text-anchor", "end")
@@ -275,52 +265,55 @@ function createGraph(year) {
       .attr("transform","translate(0," + 180 +")"); 
         
         
-      clickButton.append("text")
-                   .attr("x", width +legend_width)
-              .attr("y", 9)
-                .attr("dy", ".35em")
-                  .style("text-anchor", "end")
-                .text("Switch View")
-            .style("text-decoration", "underline") 
-            .style("font-size", "16px")
-            .attr("fill","blue")
-            .attr("id","clickChangeView") ;      
-        
-      // start with relative view
-      swapToRelative(); 
-
-      // Switch view on click the clickButton 
-      d3.selectAll("#"+ "clickChangeView")
-      .on("click",function(){
-        if (absoluteView) {
-          swapToRelative();      
-        } else {
-          swapToAbsolute();        
-        }
-        absoluteView = !absoluteView 
-      });
-
+    clickButton.append("text")
+      .attr("x", width + legend_width)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+        .style("text-anchor", "end")
+      .text("Switch View")
+      .style("text-decoration", "underline") 
+      .style("font-size", "16px")
+      .attr("fill","blue")
+      .attr("id","clickChangeView") ;      
       
-      function swapToAbsolute(){    
-        courseRelative.selectAll("rect").transition().duration(1000).style("opacity",0); // Hide relative rectangles
-        courseAbsolute.selectAll("rect").transition().duration(1000).style("opacity",1); // Show absolute rectangles  
-        svg.select(".y.axis.relative").transition().duration(1000).style("opacity",0); // Hide relative axis
-        svg.select(".y.axis.absolute").transition().duration(1000).style("opacity",1); // Show absolute axis
+    // Init
+    if (!absoluteView)
+      swapToRelative();
+    else
+      swapToAbsolute;
+
+    // Switch view on click the clickButton 
+    d3.selectAll("#"+ "clickChangeView")
+    .on("click",function(){
+      if (absoluteView) {
+        swapToRelative();      
+      } else {
+        swapToAbsolute();        
       }
-      
-      function swapToRelative(){
-        courseAbsolute.selectAll("rect").transition().duration(1000).attr("fill",function(d) {return  color(d.name)})
-        courseAbsolute.selectAll("rect").transition().duration(1000).style("opacity",0); // Hide absolute rectangles      
-        courseRelative.selectAll("rect").transition().duration(1000).style("opacity",1); // Show relative rectangles  
-        svg.select(".y.axis.relative").transition().duration(1000).style("opacity",1);  // Show relative axis   
-        svg.select(".y.axis.absolute").transition().duration(1000).style("opacity",0);// Hide absolute axis         
-      }
+      absoluteView = !absoluteView 
+    });
+
+    
+    function swapToAbsolute(){    
+      courseRelative.selectAll("rect").transition().duration(1000).style("opacity",0); // Hide relative rectangles
+      courseAbsolute.selectAll("rect").transition().duration(1000).style("opacity",1); // Show absolute rectangles  
+      svg.select(".y.axis.relative").transition().duration(1000).style("opacity",0); // Hide relative axis
+      svg.select(".y.axis.absolute").transition().duration(1000).style("opacity",1); // Show absolute axis
+    }
+    
+    function swapToRelative(){
+      courseAbsolute.selectAll("rect").transition().duration(1000).attr("fill",function(d) {return  color(d.name)})
+      courseAbsolute.selectAll("rect").transition().duration(1000).style("opacity",0); // Hide absolute rectangles      
+      courseRelative.selectAll("rect").transition().duration(1000).style("opacity",1); // Show relative rectangles  
+      svg.select(".y.axis.relative").transition().duration(1000).style("opacity",1);  // Show relative axis   
+      svg.select(".y.axis.absolute").transition().duration(1000).style("opacity",0);// Hide absolute axis         
+    }
   }); // CSV Declaration
 
 }
 
 function refreshGraph (year) {
-  var svg = d3.select("svg");
+  var svg = d3.select("svg").select("g");
   svg.selectAll("*").remove();
 
   createGraph(year);
