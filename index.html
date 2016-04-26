@@ -357,12 +357,12 @@ function createGraph(year) {
 
 function refreshGraph (year) {
   var svg = d3.select("svg").select("g");
-  svg.transition().duration(800).style("opacity",0); // Make the old graph fade
-  window.setTimeout(deleteEverything, 800);  // Delete the graph
+  svg.transition().duration(600).style("opacity",0); // Make the old graph fade
+  window.setTimeout(deleteEverything, 600);  // Delete the graph
 
   // Need to pass a parameter called year to createGraph
-  window.setTimeout(createGraph, 800, year); // Make a new graph
-  window.setTimeout(setVisible, 800);
+  window.setTimeout(createGraph, 600, year); // Make a new graph
+  window.setTimeout(setVisible, 600);
 }
 
 function setVisible () {
