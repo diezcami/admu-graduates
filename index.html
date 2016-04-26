@@ -109,7 +109,8 @@ function createGraph(year) {
           y_height0: y_height0,
           name: d.info[i].name,
           mycourse: d.course,
-          y_pct: y_pct
+          y_pct: y_pct,
+          y_wtv: d.info[i].y1
         });
       }
     });
@@ -181,7 +182,8 @@ function createGraph(year) {
           d3.select(this)
             .attr("opacity", 1);
         }                  
-      })    
+      }) 
+
   /* ==================================================================
       CSV DECLARATION: ABSOLUTE VIEW
   ===================================================================== */     
@@ -213,6 +215,31 @@ function createGraph(year) {
       .attr("class","absolute")
       .style("pointer-events","all")
       .attr("opacity",absoluteView?1:0); // Initially invisible
+
+    courseAbsolute.selectAll("rect")
+      .on("mouseover", function(d){
+        if(absoluteView){
+          var xPos = parseFloat(d3.select(this).attr("x"));
+          var yPos = parseFloat(d3.select(this).attr("y"));
+          var height = parseFloat(d3.select(this).attr("height"))
+                  
+          d3.select(this)
+            .attr("opacity", 0.7);             
+          
+          svg.append("text")
+            .attr("x",xPos)
+            .attr("y",yPos +height/2)
+            .attr("class","tooltipAbs")
+            .text(d.y_height1);   
+        }
+      })
+      .on("mouseout",function(){
+        if(absoluteView){
+          svg.select(".tooltipAbs").remove();
+          d3.select(this)
+            .attr("opacity", 1);
+        }                  
+      }) 
             
   /* ==================================================================
       DEFINE 2 SCALES, ONE OF WHICH IS ALWAYS HIDDEN
@@ -288,7 +315,10 @@ function createGraph(year) {
       .style("text-decoration", "bold") 
       .style("font-size", "30px")
       .attr("fill","#444");
-      
+
+  /* ==================================================================
+      SWAP FUNCTIONS
+  ===================================================================== */       
     // Init
     if (!absoluteView)
       swapToRelative();
@@ -322,14 +352,27 @@ function createGraph(year) {
       svg.select(".y.axis.absolute").transition().duration(1000).style("opacity",0);// Hide absolute axis         
     }
   }); // CSV Declaration
-
+  console.log(year);
 }
 
 function refreshGraph (year) {
   var svg = d3.select("svg").select("g");
-  svg.selectAll("*").remove();
+  svg.transition().duration(800).style("opacity",0); // Make the old graph fade
+  window.setTimeout(deleteEverything, 800);  // Delete the graph
 
-  createGraph(year);
+  // Need to pass a parameter called year to createGraph
+  window.setTimeout(createGraph, 800, year); // Make a new graph
+  window.setTimeout(setVisible, 800);
+}
+
+function setVisible () {
+  var svg = d3.select("svg").select("g");
+  svg.transition().duration(500).style("opacity",1);
+}
+
+function deleteEverything () {
+  var svg = d3.select("svg").select("g");
+  svg.selectAll("*").remove();
 }
 
 createGraph(2014); // Init to 2014
