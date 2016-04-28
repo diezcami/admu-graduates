@@ -15,27 +15,27 @@ A representation of post-graduation data from ADMU alumni from 2010-2014.
       <input name="2010" 
              type="button" 
              value="2010" 
-             onclick="refreshGraph(2010);" />
+             onclick="refreshGraph('2010');" />
 
       <input name="2011" 
              type="button" 
              value="2011" 
-             onclick="refreshGraph(2011);" />
+             onclick="refreshGraph('2011');" />
 
       <input name="2012" 
              type="button" 
              value="2012" 
-             onclick="refreshGraph(2012);" />    
+             onclick="refreshGraph('2012');" />    
 
       <input name="2013" 
              type="button" 
              value="2013" 
-             onclick="refreshGraph(2013);" />
+             onclick="refreshGraph('2013');" />
 
       <input name="2014" 
              type="button" 
              value="2014" 
-             onclick="refreshGraph(2014);" />    
+             onclick="refreshGraph('2014');" />    
   </div>
 
 <script src="d3-src/d3.min.js"></script>
@@ -48,7 +48,7 @@ A representation of post-graduation data from ADMU alumni from 2010-2014.
 var legend_width = 150;
 var absoluteView = false;
 
-var margin = {top: 40, right: 0, bottom: 250, left: 50},
+var margin = {top: 40, right: 35, bottom: 250, left: 50},
   width = 1150 - margin.left - margin.right,
   height = 600 - margin.top - margin.bottom;
 
@@ -86,6 +86,8 @@ var svg = d3.select("body").append("svg")
 
 function createGraph(year) {
   var fileName = "data/" + year + ".csv";
+  if (year == '2013') // Hotfix: 2013.csv doesn't work for some reason
+    fileName = "data/2013-.csv";
   /* ==================================================================
       CSV DECLARATION
   ===================================================================== */ 

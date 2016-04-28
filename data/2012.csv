@@ -1,45 +1,58 @@
-course,respondents,employed,furtherstudies,unemployed,vacation,vocational
-AB Humanities,18,0.44,0.28,0,0.17,0
-AB Interdisciplinary Studies,9,0.44,0,0,0.11,0
-AB Lit. (Eng.),18,0.22,0.67,0,0,0
-AB Philo.,39,0.44,0,0.05,0,0
-AB Philo (Pre-Divinity),11,0.27,0.18,0.27,0.09,0
-BFA Art Management,16,0.5,0.19,0.06,0,0
-BFA Creative Writing,35,0.43,0,0.06,0,0
-BFA Information Design,4,0,0,0,0,0
-BS Communications Technology Management,18,0.44,0,0,0.11,0
-BS Information Technology Entrepreneurship,24,0.17,0.17,0,0.25,0
-BS Legal Management,28,0.18,0,0,0,0
-BS Managemet (Standard Program),18,0.56,0.22,0,0,0
-BS Management (Honors),22,0.77,0,0,0,0
-BS Management of Applied Chemistry,45,0.31,0.07,0,0,0
-BS Management Engineering,29,0.55,0.1,0.07,0,0
-BS Applied Physics with Applied Computer Systems,29,0.21,0.07,0,0.1,0
-BS Biology,39,0.64,0.08,0,0.03,0
-BS Chemistry with Materials Science Engineering,17,0.53,0,0,0,0
-BS Computer Engineering,4,0.25,0.25,0,0,0
-BS Computer Science,40,0.6,0.08,0.03,0.08,0
-BS Electronics Engineering,20,0.05,0.05,0,0,0
-BS Environmental Science,34,0.79,0.09,0.03,0.06,0
-BS Health Sciences,32,0.25,0.03,0,0,0
-BS Life Sciences,29,0.79,0.03,0,0,0
-BS Mathematics,2,0.5,0,0,0,0
-BS Management Information Systems,13,0.69,0,0,0,0
-BS Physics with Materials and Science Engineering,25,0,0,0,0,0
-"BSM Applied Mathematics, Major in Mathematical Finance",14,1,0,0,0,0
-BS-MS Chemistry,39,0.69,0.13,0,0,0
-AB Chinese Studies,35,0.4,0.11,0.31,0.06,0
-AB Chinese Studies - Business Track,6,0,0.67,0,0,0
-AB Development Studies,32,0.09,0.03,0.03,0.03,0
-AB Economics,4,0.25,0.75,0,0,0
-AB Economics (Honors),0,0,0,0,0,0
-AB European Studies,44,0.86,0,0,0,0
-AB Management Economics,37,0.16,0.22,0,0,0
-AB History,20,1,0,0,0,0
-AB Political Science,15,0.6,0,0.2,0,0
-AB Psychology,10,0.6,0.1,0.1,0,0
-BS Psychology,9,0.11,0.11,0.11,0,0
-AB Social Sciences,1,1,0,0,0,0
-AB-MA Political Science,15,0.47,0.13,0,0,0
-AB Political Science - Masters in Public Management,13,0.62,0.15,0.08,0.08,0
-Unspecified Courses,12,0.67,0,0,0,0
+course,respondents,Employed,Employed And Further Studies,Further Studies,Resigned,Unemployed,Vacation,Vocational
+AB Hum,2,1,1,0,0,0,0,0
+AB IS,19,14,1,3,1,0,0,0
+AB Lit (Eng),8,3,1,4,0,0,0,0
+AB Lit (Fil),0,0,0,0,0,0,0,0
+AB-MA Lit (Fil),0,0,0,0,0,0,0,0
+AB Ph,1,0,1,0,0,0,0,0
+AB Ph (Pre-Div),1,0,0,0,1,0,0,0
+AB Pre-Div,0,0,0,0,0,0,0,0
+BFA AM,0,0,0,0,0,0,0,0
+BFA CW,5,4,0,0,0,0,1,0
+BFA ID,8,4,0,4,0,0,0,0
+BFA TA,1,1,0,0,0,0,0,0
+BS ME,50,41,3,2,2,1,1,0
+BS Mgt-H,11,9,1,1,0,0,0,0
+BS Mgt ,101,85,2,9,2,2,1,0
+BS Comtech,65,52,1,5,1,5,1,0
+BS ITE,0,0,0,0,0,0,0,0
+BS LM,24,14,0,9,0,0,1,0
+BS MAC,26,22,0,2,1,0,1,0
+BS Bio,11,1,0,9,0,0,1,0
+BS Ch,6,2,1,3,0,0,0,0
+BS Ch-ACS,0,0,0,0,0,0,0,0
+BS Ch-MSE,8,6,0,1,0,0,1,0
+BS-MS Ch,1,0,1,0,0,0,0,0
+BS CoE,11,8,1,1,0,0,1,0
+BS ECE,21,11,0,7,0,0,3,0
+BS ES,3,1,0,2,0,0,0,0
+BS HS,64,1,0,62,0,0,1,0
+BS LfSci,24,0,0,24,0,0,0,0
+BS CS,20,17,1,1,0,1,0,0
+BS-MS CS,0,0,0,0,0,0,0,0
+BS MIS,12,10,1,1,0,0,0,0
+BS MIS-MS CS,0,0,0,0,0,0,0,0
+BS Math,1,1,0,0,0,0,0,0
+BSM AMC,1,1,0,0,0,0,0,0
+BSM AMF,11,6,0,2,0,0,3,0
+BS Aps-ACS,2,1,1,0,0,0,0,0
+BS Ps,0,0,0,0,0,0,0,0
+BS Ps-ACS,0,0,0,0,0,0,0,0
+BS Ps-MSE,1,1,0,0,0,0,0,0
+BS-MS Ps,0,0,0,0,0,0,0,0
+AB ChnS,1,1,0,0,0,0,0,0
+AB ChnS (Business Track),0,0,0,0,0,0,0,0
+AB Com,26,16,2,2,2,0,4,0
+AB DS,10,9,0,0,0,0,1,0
+AB Ec-H,6,5,0,1,0,0,0,0
+AB Ec ,27,16,1,5,1,2,2,0
+AB Mec,20,13,0,5,0,2,0,0
+AB Eu,18,10,0,5,1,0,2,0
+AB His,0,0,0,0,0,0,0,0
+AB Pos,7,2,1,2,0,0,2,0
+AB-MA Pos,3,1,0,2,0,0,0,0
+AB Pos (Masters in Pub. Mgt.),0,0,0,0,0,0,0,0
+AB Psy,29,20,6,1,1,0,1,0
+BS Psy,20,10,1,8,1,0,0,0
+AB Sos,3,3,0,0,0,0,0,0
+Unspecified Courses,0,0,0,0,0,0,0,0
