@@ -332,25 +332,38 @@ function createGraph(year) {
       .enter().append("g")
       .attr("class","clickButton")
       .attr("transform","translate(-30," + 160 +")"); 
-            
+
+    clickButton.append("rect")
+      .attr("x", width + legend_width - 66)
+      .attr("y", -122)
+      .attr("width", 100)
+      .attr("height", 25)
+      .attr("fill","#f67721")
+      .attr("class","switchButton") 
+      .attr("id","clickChangeView");  
+
     clickButton.append("text")
-      .attr("x", width + legend_width + 33)
-      .attr("y", -115)
+      .attr("x", width + legend_width + 28)
+      .attr("y", -110)
       .attr("dy", ".35em")
         .style("text-anchor", "end")
       .text("Switch View")
-      .style("text-decoration", "underline") 
+      //.style("text-decoration", "underline") 
       .style("font-size", "16px")
-      .attr("fill","#444")
-      .attr("id","clickChangeView");      
-/*
-    clickButton.append("rect")
-      .attr("x", width + 66)
-      .attr("y", -10)
-      .attr("width", 80)
-      .attr("height", 35)
-      .attr("fill","#f6e4cf");
-*/
+      .attr("fill","#FFF")
+      .attr("id","clickChangeView");  
+
+    // Hover Button
+    clickButton.selectAll("rect")
+      .on("mouseover", function(d){
+        d3.select(this)
+          .attr("fill","#eb6f1b"); 
+      })
+      .on("mouseout",function(){
+        d3.select(this)
+          .attr("fill","#f67721");   
+      })
+
     clickButton.append("text")
       .attr("x", width + legend_width + 33)
       .attr("y", -140)
